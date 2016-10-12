@@ -1,0 +1,41 @@
+{
+  "name": "home-automation-js",
+  "version": "1.0.0",
+  "description": "A simulated home automation system",
+  "main": "index.js",
+  "directories": {
+    "test": "tests",
+    "packages": "jspm_packages"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@bitbucket.org/djessup/home-automation-js.git"
+  },
+  "author": "David Jessup <david.jessup@sydney.edu.au>",
+  "license": "ISC",
+  "homepage": "https://bitbucket.org/djessup/home-automation-js#readme",
+  "devDependencies": {
+    "browser-sync": "^2.17.2",
+    "gulp": "^3.9.1",
+    "gulp-sass": "^2.3.2",
+    "jspm": "^0.16.46"
+  },
+  "jspm": {
+    "directories": {
+      "test": "tests"
+    },
+    "dependencies": {
+      "bootstrap": "github:twbs/bootstrap@^3.3.7",
+      "css": "github:systemjs/plugin-css@^0.1.31",
+      "jquery": "npm:jquery@^3.1.1"
+    },
+    "devDependencies": {
+      "babel": "npm:babel-core@^5.8.24",
+      "babel-runtime": "npm:babel-runtime@^5.8.24",
+      "core-js": "npm:core-js@^1.1.4"
+    }
+  }
+}
