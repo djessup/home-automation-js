@@ -1,0 +1,11 @@
+{
+  "type": "Light",
+  "name": "Living room",
+  "description": "10W LED",
+  "status": "/data/light-1/status.json",
+  "properties": {
+    "enabled": true,
+    "dimmable": true,
+    "brightness": 255
+  }
+}

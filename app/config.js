@@ -10,7 +10,8 @@ System.config({
   },
   paths: {
     "github:*": "jspm_packages/github/*",
-    "npm:*": "jspm_packages/npm/*"
+    "npm:*": "jspm_packages/npm/*",
+    "app/*": "*"
   },
 
   map: {
@@ -20,6 +21,8 @@ System.config({
     "core-js": "npm:core-js@1.2.7",
     "css": "github:systemjs/plugin-css@0.1.31",
     "jquery": "npm:jquery@3.1.1",
+    "systemjs": "",
+
     "github:jspm/nodelibs-assert@0.1.0": {
       "assert": "npm:assert@1.4.1"
     },
