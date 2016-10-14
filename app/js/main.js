@@ -5,40 +5,56 @@ import $ from "jquery";
 import "bootstrap/css/bootstrap.min.css!";
 import "app/css/dashboard.css!";
 
-import {Component, ComponentConfig} from "app/js/component";
+import {Component, ComponentInstance, ComponentConfig} from "app/js/component";
 
 export class App {
 
     constructor() {
-        this.components = new Array();
+        this.components = new Map();
     }
 
+    /**
+     * Register a new component
+     * @param url the configuration URL for the component
+     */
     register(url) {
-        $.getJSON(url, (config) => {
-            let description;
+
+        if (this.components.has(url)) {
+            console.warn(`Already registered ${url}`);
+        }
+
+        $.getJSON(url).done((config) => {
             try {
-                this._load(new ComponentConfig(config));
+                this._load(url, new ComponentConfig(config));
             } catch (e) {
                 console.error(`Unable to register ${url}`, e);
             }
-
+        }).fail((jqxhr, textStatus, error) => {
+            console.error(`Failed to load component configuration from ${url}`, error);
         });
+
     }
 
     render() {
-        return "hello " + this.model;
+        return "hello world";
     }
 
-    _load(componentConfig) {
-
+    _load(url, componentConfig) {
         System.import(`app/js/plugins/${componentConfig.type.toLowerCase()}`).then((module) => {
+
             let component = module[componentConfig.type];
+
             if (component instanceof Component) {
                 throw new TypeError(`${component.constructor.name} is not a Component`);
             }
-            let c = new component(componentConfig);
-            this.components.push(c);
-            console.info(`Loaded ${componentConfig.name} (${componentConfig.type})`, c);
+
+            let theComponent = new component(componentConfig);
+            let componentInstance = new ComponentInstance(theComponent, componentConfig, url)
+            this.components.set(url, componentInstance);
+
+            componentInstance.update();
+
+            console.info(`Loaded ${componentConfig.type} (${componentConfig.name})`, theComponent);
         });
     }
 }

@@ -3,9 +3,9 @@
   "name": "Living room",
   "description": "10W LED",
   "status": "/data/light-1/status.json",
+  "frequency": "10",
   "properties": {
-    "enabled": true,
-    "dimmable": true,
-    "brightness": 255
+    "enabled": "true",
+    "dimmable": "true"
   }
 }
