@@ -20,8 +20,13 @@ System.config({
     "bootstrap": "github:twbs/bootstrap@3.3.7",
     "core-js": "npm:core-js@1.2.7",
     "css": "github:systemjs/plugin-css@0.1.31",
+    "hbs": "github:davis/plugin-hbs@1.2.3",
     "jquery": "npm:jquery@3.1.1",
     "systemjs": "",
+    "text": "github:systemjs/plugin-text@0.0.9",
+    "github:davis/plugin-hbs@1.2.3": {
+      "handlebars": "github:components/handlebars.js@4.0.5"
+    },
     "github:jspm/nodelibs-assert@0.1.0": {
       "assert": "npm:assert@1.4.1"
     },

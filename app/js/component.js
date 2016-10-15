@@ -1,25 +1,43 @@
 "use strict";
 
 import $ from "jquery";
+import hashCode from "app/js/hash-code.js";
 
 class ComponentConfig {
-    constructor(config) {
+    constructor(id, url, config) {
+
+        // Check the URL was provided
+        if (id === undefined || id === "") {
+            throw new TypeError("No component ID provided");
+        }
+
+        // Check the URL was provided
+        if (url === undefined || url === "") {
+            throw new TypeError("No configuration URL provided");
+        }
+
+        // Check the config object was provided
+        if (config === undefined) {
+            throw new TypeError("No configuration object was provided");
+        }
 
         // Check "type" property is present
-        if (!config.type || config.type === "") {
+        if (config.type === undefined || config.type === "") {
             throw new TypeError("Component description is missing the \"type\" property.");
         }
 
         // Check "name" property is present
-        if (!config.name || config.name === "") {
+        if (config.name === undefined || config.name === "") {
             throw new TypeError("Component description is missing the \"name\" property.");
         }
 
         // Check "status" property is present
-        if (!config.status || config.status === "") {
+        if (config.status === undefined || config.status === "") {
             throw new TypeError("Component description is missing the \"status\" property.");
         }
 
+        this._id = id;
+        this._url = url;
         this._type = config.type;
         this._name = config.name;
         this._description = (config.description) ? config.description : ""; // default to "" if not specified
@@ -30,12 +48,19 @@ class ComponentConfig {
         // Copy each property
         if (config.properties) {
             for (const key in config.properties) {
-                if (config.hasOwnProperty(key)) {
-                    console.log(key);
+                if (config.properties.hasOwnProperty(key)) {
                     this._properties.set(key, config.properties[key]);
                 }
             }
         }
+    }
+    
+    get id() {
+        return this._id;
+    }
+    
+    get url() {
+        return this._url;
     }
 
     /**
@@ -73,42 +98,6 @@ class ComponentConfig {
     }
 }
 
-class ComponentInstance {
-    constructor(instance, config, url) {
-        this._instance = instance;
-        this._config = config;
-        this._url = url;
-    }
-
-    update() {
-        this.instance.update().always(() => {
-            this.scheduleUpdate();
-        });
-    }
-
-    scheduleUpdate() {
-        this._timer = setTimeout(this.update.bind(this), this.config.frequency * 1000);
-    }
-
-    stopUpdate() {
-        if (this._timer) {
-            clearTimeout(this._timer);
-        }
-    }
-
-    get instance() {
-        return this._instance;
-    }
-
-    get config() {
-        return this._config;
-    }
-
-    get url() {
-        return this._url;
-    }
-}
-
 class Component {
 
     constructor(config) {
@@ -120,20 +109,35 @@ class Component {
             throw new TypeError("First argument must be an instance of ComponentConfig.");
         }
 
-        this.config = config;
-    }
-
-    update() {
-        return this.status.done((data) => {
-            this.handleUpdate(data);
-        });
+        this._config = config;
     }
 
     handleUpdate(data) {
         throw new TypeError("The handleUpdate(data) method must be overridden by the implementation.");
     }
 
+    update(onlyOnce = false) {
+        return this.status.done((data) => {
+            this.handleUpdate(data);
+        }).always(() => {
+            if (!onlyOnce) {
+                this.scheduleUpdate();
+            }
+        });
+    }
+
+    scheduleUpdate() {
+        this._timer = setTimeout(this.update.bind(this), this.config.frequency * 1000);
+    }
+
+    stopUpdates() {
+        if (this._timer) {
+            clearTimeout(this._timer);
+        }
+    }
+
     render() {
+        return $("<p>This component has not implemented a render function.</p>");
     }
 
     post(data) {
@@ -142,7 +146,11 @@ class Component {
     get status() {
         return $.getJSON(this.config.status);
     }
+
+    get config() {
+        return this._config;
+    }
 }
 
 
-export {ComponentConfig, ComponentInstance, Component}
+export {ComponentConfig, Component}

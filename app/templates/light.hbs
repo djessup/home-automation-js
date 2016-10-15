@@ -1,0 +1,12 @@
+<div class="b-light">
+    <div class="b-light__cord"></div>
+    <div class="b-light__bulb {{#if on}}b-light__bulb--on{{else}}b-light__bulb--off{{/if}}"></div>
+</div>
+
+<p>{{description}}</p>
+{{#if dimmable}}
+<p>Dimmable</p>
+{{/if}}
+
+<button type="button" class="btn btn-primary {{#if on}}active{{/if}} js-power-button">Turn {{#if on}}off{{else}}on{{/if}}</button>
+
