@@ -1,0 +1,29 @@
+<table class="table">
+    <tr>
+        <th>Device</th>
+        <td>{{description}}</td>
+    </tr>
+    <tr>
+        <th>Volts</th>
+        <td>{{volts}}</td>
+    </tr>
+    <tr>
+        <th>Amps</th>
+        <td>{{amps}}</td>
+    </tr>
+    <tr>
+        <th>Watts</th>
+        <td>
+            <div class="progress" style="margin-bottom: 0">
+                <div class="progress-bar {{progressBarClass}}" role="progressbar" aria-valuenow="{{watts}}" aria-valuemin="{{minWatts}}"
+                     aria-valuemax="{{maxWatts}}" style="min-width: 2em; width: {{percent}}%">
+                    {{watts}}W
+                </div>
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <th>Power factor</th>
+        <td>{{powerFactor}}</td>
+    </tr>
+</table>

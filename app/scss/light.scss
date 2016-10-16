@@ -1,18 +1,18 @@
+$glass-colour: #c8c8c8;
+$glow-colour: #f8ec00;
+$glow-colour-inner: #ffd800;
+
 .b-light {
-	float: right;
 	position: relative;
-	right: 5%;
 	top: -15px;
 
 	&__cord {
 		position: relative;
+		left:50%;
 		background-color: #303030;
 		width: 2px;
 		height: 100px;
 		margin-left: -1px;
-
-		transform-origin: 0 0;
-		animation: cord-sway 1.7s ease-in-out 0s infinite alternate;
 
 		// bulb holder
 		&:after {
@@ -29,44 +29,50 @@
 	}
 
 	&__bulb {
+
 		width: 48px;
 		height: 48px;
 		top: 100%;
-		left: 0;
+		position: relative;
+		left: 50%;
 		margin-top: 15px;
 		margin-left: -24px;
 		border-radius: 100%;
+		cursor: pointer;
 
-		animation: bulb-sway 1.7s ease-in-out 0s infinite alternate;
+		&--brightness {
 
-		&--off {
-			border: 1px solid #e0e0e0;
-			background: rgba(200, 200, 200, 0.05);
-			box-shadow: inset 0px 1px 5px rgba(200, 200, 200, 0.1),
-			inset 0px 2px 20px rgba(200, 200, 200, 0.6);
+			&-0 {
+				border: 1px solid #e0e0e0;
+				background: rgba($glass-colour, 0.05);
+				box-shadow: inset 0px 1px 5px rgba($glass-colour, 0.3),
+				inset 0px 2px 30px rgba($glass-colour, 0.6);
+			}
+
+			&-25 {
+				background: rgba(lighten($glass-colour, 20%), 0.7);
+				box-shadow: 0 0 70px rgba($glow-colour, 0.5),
+				inset 0 0 50px rgba(darken($glow-colour-inner, 5%), 1);
+			}
+
+			&-50 {
+				background: rgba(lighten($glass-colour, 20%), 0.7);
+				box-shadow: 0 0 70px rgba($glow-colour, 0.65),
+				inset 0 0 50px rgba(darken($glow-colour-inner, 1%), 1);
+			}
+
+			&-75 {
+				background: rgba(lighten($glass-colour, 20%), 0.7);
+				box-shadow: 0 0 70px rgba($glow-colour, 0.65),
+				inset 0 0 40px rgba(darken($glow-colour-inner, 0%), 1);
+			}
+
+			&-100 {
+				background: rgba(white, 0.9);
+				box-shadow: 0 0 70px $glow-colour,
+				inset 0 0 40px rgba($glow-colour-inner, 0.85);
+			}
 		}
-
-		&--on {
-			background: rgba(255, 255, 255, 0.9);
-			box-shadow: 0 0 70px rgb(248, 236, 0),
-			inset 0 0 45px rgb(255, 216, 0);
-		}
 	}
 
-}
-
-@keyframes cord-sway {
-	from {
-		transform: rotate(3deg);
-	} to {
-		transform: rotate(-3deg);
-	}
-}
-
-@keyframes bulb-sway {
-	from {
-		transform: rotate(0.5deg) translate(-7px, -0.5px);
-	} to {
-		transform: rotate(0.5deg) translate(7px, -0.5px);
-	}
 }

@@ -1,4 +1,5 @@
 var gulp        = require('gulp');
+var plumber = require('gulp-plumber');
 var browserSync = require('browser-sync').create();
 var sass        = require('gulp-sass');
 var karmaServer = require('karma').Server;
@@ -12,18 +13,19 @@ gulp.task('serve', ['sass'], function() {
 
     gulp.watch("app/scss/*.scss", ['sass']);
     gulp.watch("app/js/**/*.js", ['js']);
-    gulp.watch("app/**/*.(html|hbs)").on('change', browserSync.reload);
+    gulp.watch("app/**/*.html").on('change', browserSync.reload);
+    gulp.watch("app/**/*.hbs").on('change', browserSync.reload);
 });
 
 // Compile sass into CSS & auto-inject into browsers
 gulp.task('sass', function() {
     return gulp.src("app/scss/*.scss")
-        .pipe(sass())
+        .pipe(sass().on('error', sass.logError))
         .pipe(gulp.dest("app/css"))
         .pipe(browserSync.stream());
 });
 
-// Compile sass into CSS & auto-inject into browsers
+// Stream updated JS into the browser
 gulp.task('js', function() {
     return gulp.src("app/js/**/*.js")
         .pipe(browserSync.stream());

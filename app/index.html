@@ -22,10 +22,7 @@
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-right">
                 <li>
-                    <a href="#">Dashboard</a>
-                </li>
-                <li>
-                    <a href="#">Settings</a>
+                    <a href="/">Dashboard</a>
                 </li>
                 <li>
                     <a href="#">Help</a>
@@ -57,81 +54,35 @@
 
             <h1 class="page-header">Dashboard</h1>
 
-            <div id="has-components" class="row">
+            <div id="has-components" class="row"></div>
 
-                <div class="col-sm-6 col-md-4 placeholder">
+            <div class="row">
+                <div class="col-sm-6 col-sm-offset-3 b-add-component">
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <h4 class="panel-title">Add more components</h4>
                         </div>
                         <div class="panel-body">
-
-                            <p>Connecting the component to your network then registering it's configuration URL.</p>
-                            <button class="btn btn-sm btn-primary">Register component</button>
+                            <p>Connect the component to your network and enter the configuration URL:</p>
+                            <form class="js-add-component-form">
+                                <div class="form-group">
+                                    <label for="component-config-url" class="sr-only">Configuration URL</label>
+                                    <div class="col-sm-9">
+                                        <div class="input-group">
+                                            <div class="input-group-addon"><span class="glyphicon glyphicon-globe"></span></div>
+                                            <input type="text" class="form-control js-component-config-url" id="component-config-url" placeholder="/data/light-1/config.json">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <button type="submit" class="btn btn-primary btn-block">Register</button>
+                                    </div>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
-
             </div>
 
-            <h2 class="sub-header">Section title</h2>
-            <div class="table-responsive">
-                <table class="table table-striped">
-                    <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Header</th>
-                        <th>Header</th>
-                        <th>Header</th>
-                        <th>Header</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td>1,001</td>
-                        <td>Lorem</td>
-                        <td>ipsum</td>
-                        <td>dolor</td>
-                        <td>sit</td>
-                    </tr>
-                    <tr>
-                        <td>1,002</td>
-                        <td>amet</td>
-                        <td>consectetur</td>
-                        <td>adipiscing</td>
-                        <td>elit</td>
-                    </tr>
-                    <tr>
-                        <td>1,003</td>
-                        <td>Integer</td>
-                        <td>nec</td>
-                        <td>odio</td>
-                        <td>Praesent</td>
-                    </tr>
-                    <tr>
-                        <td>1,003</td>
-                        <td>libero</td>
-                        <td>Sed</td>
-                        <td>cursus</td>
-                        <td>ante</td>
-                    </tr>
-                    <tr>
-                        <td>1,004</td>
-                        <td>dapibus</td>
-                        <td>diam</td>
-                        <td>Sed</td>
-                        <td>nisi</td>
-                    </tr>
-                    <tr>
-                        <td>1,005</td>
-                        <td>Nulla</td>
-                        <td>quis</td>
-                        <td>sem</td>
-                        <td>at</td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
         </div>
     </div>
 </div>
@@ -141,6 +92,13 @@
 <script>System.import('js/app.js').then(function (app) {
     var api = app.run($("#has-components"));
     api.register("/data/light-1/config.json");
+    api.register("/data/light-2/config.json");
+    api.register("/data/power-meter/config.json");
+
+    $('.js-add-component-form').submit(function(event) {
+        api.register($(event.target).find('.js-component-config-url').val());
+        event.preventDefault();
+    });
 });</script>
 </body>
 </html>

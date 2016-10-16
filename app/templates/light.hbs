@@ -1,12 +1,58 @@
-<div class="b-light">
-    <div class="b-light__cord"></div>
-    <div class="b-light__bulb {{#if on}}b-light__bulb--on{{else}}b-light__bulb--off{{/if}}"></div>
+<div class="col-xs-10">
+    <table class="table">
+        <tr>
+            <th>Light</th>
+            <td>{{name}}</td>
+        </tr>
+        <tr>
+            <th>Details</th>
+            <td>{{description}}</td>
+        </tr>
+        <tr>
+            <th>Dimmable?</th>
+            <td>{{#if dimmable}}Yes{{else}}No{{/if}}</td>
+        </tr>
+        {{#if dimmable}}
+            <tr>
+                <th>Brightness</th>
+                <td>{{brightness}}%</td>
+            </tr>
+        {{/if}}
+    </table>
 </div>
 
-<p>{{description}}</p>
+<div class="col-xs-2 b-light">
+    <div class="b-light__cord"></div>
+    <div class="b-light__bulb
+        {{#if dimmable~}}
+            b-light__bulb--brightness-{{brightness}}
+        {{~else~}}
+            {{#if on}}
+                b-light__bulb--brightness-100
+            {{else}}
+                b-light__bulb--brightness-0
+            {{/if}}
+        {{~/if~}}
+    "></div>
+</div>
+
 {{#if dimmable}}
-<p>Dimmable</p>
+    <div class="btn-group btn-block">
+        <button type="button" class="js-power-button col-xs-10 btn btn-primary">Turn {{#if on}}off{{else}}
+            on{{/if}}</button>
+        <button type="button" class="col-xs-2 btn btn-primary dropdown-toggle" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
+            <span class="caret"></span>
+            <span class="sr-only">Toggle Dropdown</span>
+        </button>
+        <ul class="dropdown-menu pull-right">
+            <li><a data-light-brightness="25" class="js-brightness-control" href="#">25% brightness</a></li>
+            <li><a data-light-brightness="50" class="js-brightness-control" href="#">50% brightness</a></li>
+            <li><a data-light-brightness="75" class="js-brightness-control" href="#">75% brightness</a></li>
+            <li><a data-light-brightness="100" class="js-brightness-control" href="#">100% brightness</a></li>
+        </ul>
+    </div>
+{{else}}
+    <button type="button" class="js-power-button btn btn-primary btn-block{{#if on}} active{{/if}}">
+        Turn {{#if on}}off{{else}}on{{/if}}</button>
 {{/if}}
-
-<button type="button" class="btn btn-primary {{#if on}}active{{/if}} js-power-button">Turn {{#if on}}off{{else}}on{{/if}}</button>
-

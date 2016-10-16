@@ -31,5 +31,6 @@ gulp serve
 
 ## Acknowledgments
 
-* hashCode.js adapted from http://werxltd.com/wp/2010/05/13/javascript-implementation-of-javas-string-hashcode-method/
+* hashCode.js adapted from [http://werxltd.com/wp/2010/05/13/javascript-implementation-of-javas-string-hashcode-method/](http://werxltd.com/wp/2010/05/13/javascript-implementation-of-javas-string-hashcode-method/)
+* Light bulb CSS written from scratch, but inspired by [https://codepen.io/Simentesempre/pen/raoERY](https://codepen.io/Simentesempre/pen/raoERY)
 * All dependencies are courtesy of their respective owners

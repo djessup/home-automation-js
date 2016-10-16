@@ -5,7 +5,6 @@
   "status": "/data/light-1/status.json",
   "frequency": "10",
   "properties": {
-    "enabled": "true",
-    "dimmable": "true"
+    "dimmable": true
   }
 }
