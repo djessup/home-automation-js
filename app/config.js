@@ -18,6 +18,8 @@ System.config({
     "babel": "npm:babel-core@5.8.38",
     "babel-runtime": "npm:babel-runtime@5.8.38",
     "bootstrap": "github:twbs/bootstrap@3.3.7",
+    "bricklayer": "npm:bricklayer@0.4.3",
+    "bricklayer-jquery": "npm:bricklayer@0.4.3/dist/plugins/jquery/bricklayer.jquery.js",
     "core-js": "npm:core-js@1.2.7",
     "css": "github:systemjs/plugin-css@0.1.31",
     "hbs": "github:davis/plugin-hbs@1.2.3",

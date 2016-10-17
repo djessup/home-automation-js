@@ -6,13 +6,17 @@ import hashCode from "app/js/hash-code.js";
 import panelTmpl from "app/templates/component-panel.hbs!";
 import "bootstrap/css/bootstrap.min.css!";
 import "app/css/dashboard.css!";
-import "masonry";
+import "app/css/grid.css!";
+import "bricklayer";
+import "bricklayer-jquery";
+import "bricklayer/dist/bricklayer.css!";
 
 export class App {
 
     constructor(container) {
         this._container = $(container);
         this._components = new Map();
+        this._panels = new Map();
     }
 
     /**
@@ -48,10 +52,22 @@ export class App {
         const component = this._components.get(id);
         const panel = this._getPanel(component.config);
         panel.fadeOut(() => {
-            panel.remove();
             this._components.delete(id);
+            this._panels.delete(id);
+            this._render();
             console.info(`Removed ${component.config.type} (${component.config.name})`);
         });
+    }
+
+    _render() {
+        for (const component of this._components.values()) {
+            this._container.append(this._getPanel(component.config));
+        }
+        const bricklayer = this._container.data('bricklayer');
+        if (bricklayer !== undefined) {
+            this._container.data('bricklayer').destroy();
+        }
+        this._container.bricklayer();
     }
 
     /**
@@ -83,6 +99,8 @@ export class App {
             // Start scheduled component updates
             component.update();
 
+            this._render();
+
             console.info(`Loaded ${config.type} (${config.name})`, component);
         });
     }
@@ -95,22 +113,22 @@ export class App {
      */
     _getPanel(config) {
         // Look for the panel in the container
-        let panel = this._container.find(`#${config.id}`);
+        if (this._panels.has(config.id)) {
+            return this._panels.get(config.id);
+        }
 
         // If no panel found, create one using the panel template and add it to the container
-        if (panel.length === 0) {
-            panel = $(panelTmpl({
-                title: `${config.type} (${config.name})`,
-                id: config.id
-            }));
+        const panel = $(panelTmpl({
+            title: `${config.type} (${config.name})`,
+            id: config.id
+        }));
 
-            this._container.append(panel);
+        // Attach the remove button handler
+        panel.find('.js-remove-button').click(() => {
+            this.remove(config.id)
+        });
 
-            // Attach the remove button handler
-            panel.find('.js-remove-button').click(() => {
-                this.remove(config.id)
-            });
-        }
+        this._panels.set(config.id, panel);
 
         return panel;
     }
