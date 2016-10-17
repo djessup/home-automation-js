@@ -1,10 +1,10 @@
 {
-  "type": "Light",
-  "name": "Patio",
-  "description": "20W LED",
-  "status": "/data/light-2/status.json",
+  "type": "AirConditioner",
+  "name": "Living room",
+  "description": "Fujitsu 7.1KW reverse cycle system",
+  "status": "/data/aircon/status.json",
   "frequency": "10",
   "properties": {
-    "dimmable": false
+    
   }
 }

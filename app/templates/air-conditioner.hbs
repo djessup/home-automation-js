@@ -1,0 +1,71 @@
+<table class="table">
+    <tr>
+        <th>Device</th>
+        <td>{{description}}</td>
+    </tr>
+    <tr>
+        <th>Power</th>
+        <td>
+            {{#if on}}
+                On
+            {{else}}
+				Off
+            {{/if}}
+            <button class="pull-right js-power-toggle btn btn-xs btn-primary {{#if on}}active{{/if}}">
+                {{#if on}}Turn off{{else}}Turn on{{/if}}
+            </button>
+        </td>
+    </tr>
+    <tr>
+        <th>Mode</th>
+        <td>
+            {{mode}}
+            <div class="btn-group pull-right ">
+              <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Change <span class="caret"></span>
+              </button>
+              <ul class="dropdown-menu">
+                <li><a class="js-mode-control" data-aircon-mode="Auto" href="#">Auto</a></li>
+                <li role="separator" class="divider"></li>
+                <li><a class="js-mode-control" data-aircon-mode="Cool" href="#">Cool</a></li>
+                <li><a class="js-mode-control" data-aircon-mode="Heat" href="#">Heat</a></li>
+                <li><a class="js-mode-control" data-aircon-mode="Dry" href="#">Dry</a></li>
+                <li><a class="js-mode-control" data-aircon-mode="Fan" href="#">Fan</a></li>
+              </ul>
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <th>Target/current temp</th>
+        <td>{{targetTemp}}C / {{currentTemp}}C</td>
+    </tr>
+    <tr>
+        <th>Oscillate</th>
+        <td>
+            {{#if oscillate}}On{{else}}Off{{/if}}
+            <button class="pull-right js-oscillate-toggle btn btn-xs btn-default {{#if oscillate}}active{{/if}}">
+                {{#if oscillate}}Disable{{else}}Enable{{/if}}
+            </button>
+        </td>
+    </tr>
+    <tr>
+        <th>Timer</th>
+        <td>
+            {{timer}}
+            <div class="btn-group pull-right ">
+              <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Set timer <span class="caret"></span>
+              </button>
+              <ul class="dropdown-menu">
+                <li><a class="js-timer-control" data-aircon-timer="30" href="#">30 minutes</a></li>
+                <li><a class="js-timer-control" data-aircon-timer="60" href="#">1 hour</a></li>
+                <li><a class="js-timer-control" data-aircon-timer="90" href="#">1.5 hours</a></li>
+                <li><a class="js-timer-control" data-aircon-timer="120" href="#">2 hours</a></li>
+                <li><a class="js-timer-control" data-aircon-timer="180" href="#">3 hours</a></li>
+                <li role="separator" class="divider"></li>
+                <li><a class="js-timer-control" data-aircon-timer="0" href="#">Disable timer</a></li>
+              </ul>
+            </div>
+        </td>
+    </tr>
+</table>

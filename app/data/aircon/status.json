@@ -1,3 +1,8 @@
 {
-  "on": false
+  "on": true,
+  "targetTemp": 23,
+  "currentTemp": 25,
+  "mode": "Auto",
+  "timer": 0,
+  "oscillate": true
 }

@@ -215,6 +215,7 @@ class Component {
 
     update(onlyOnce = false) {
         return this.status.then((data) => { // resolve handler
+            console.info(`Got remote data for ${this.config.type} (${this.config.name}):`, data);
             this.disablePost();
             this.handleUpdate(data);
             this.enablePost();

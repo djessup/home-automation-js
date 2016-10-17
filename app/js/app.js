@@ -6,6 +6,7 @@ import hashCode from "app/js/hash-code.js";
 import panelTmpl from "app/templates/component-panel.hbs!";
 import "bootstrap/css/bootstrap.min.css!";
 import "app/css/dashboard.css!";
+import "masonry";
 
 export class App {
 

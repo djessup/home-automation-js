@@ -45,14 +45,32 @@ export class PowerMeter extends Component {
             volts: this.volts,
             amps: this.amps,
             watts: this.watts,
-            powerFactor: this.data.powerFactor,
+            powerFactor: this.powerFactor,
             percent: this.percent,
             progressBarClass: progressBarClass
         }));
     }
 
+    /**
+     * Because this is a simulated system we'll cheat and fake some variations in the "remote" data to simulate real
+     * activity and make the component seem dynamic. Basically this function will fiddle with the local cache of remote
+     * data as if it was provided by a real remote service.
+     */
+    update(onlyOnce = false) {
+        super.update(onlyOnce);
+
+        if (this._remoteData !== undefined) {
+            // Fudge the numbers by +/- 5%
+            const variation              = 1 + (Math.random() * (0.05 + 0.05) - 0.05); // randomly vary by between -5% and 5%
+            this._remoteData.volts       = this._remoteData.volts * variation;
+            this._remoteData.amps        = this._remoteData.amps * variation;
+            this._remoteData.powerFactor = this._remoteData.powerFactor * variation;
+            this._remoteData.watts       = this._remoteData.volts * this._remoteData.amps;
+        }
+    }
+
     get volts() {
-        return this.data.volts + " V"
+        return Math.round(this.data.volts) + " V";
     }
 
     get watts() {
@@ -61,9 +79,13 @@ export class PowerMeter extends Component {
 
     get amps() {
         if (this.data.amps < 1) {
-            return this.data.amps * 1000 + " mA";
+            return Math.round(this.data.amps * 1000) + " mA";
         }
-        return this.data.amps + " A";
+        return Math.round(this.data.amps * 100) / 100 + " A";
+    }
+
+    get powerFactor() {
+        return Math.round(this.data.powerFactor * 100) / 100;
     }
 
     get minWatts() {

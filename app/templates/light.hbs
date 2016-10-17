@@ -15,7 +15,20 @@
         {{#if dimmable}}
             <tr>
                 <th>Brightness</th>
-                <td>{{brightness}}%</td>
+                <td>
+                    {{brightness}}%
+                    <div class="btn-group pull-right ">
+						<button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							Change <span class="caret"></span>
+						</button>
+						<ul class="dropdown-menu">
+							<li><a data-light-brightness="25" class="js-brightness-control" href="#">25% brightness</a></li>
+							<li><a data-light-brightness="50" class="js-brightness-control" href="#">50% brightness</a></li>
+							<li><a data-light-brightness="75" class="js-brightness-control" href="#">75% brightness</a></li>
+							<li><a data-light-brightness="100" class="js-brightness-control" href="#">100% brightness</a></li>
+						</ul>
+                    </div>
+                </td>
             </tr>
         {{/if}}
     </table>
@@ -36,23 +49,7 @@
     "></div>
 </div>
 
-{{#if dimmable}}
-    <div class="btn-group btn-block">
-        <button type="button" class="js-power-button col-xs-10 btn btn-primary">Turn {{#if on}}off{{else}}
-            on{{/if}}</button>
-        <button type="button" class="col-xs-2 btn btn-primary dropdown-toggle" data-toggle="dropdown"
-                aria-haspopup="true" aria-expanded="false">
-            <span class="caret"></span>
-            <span class="sr-only">Toggle Dropdown</span>
-        </button>
-        <ul class="dropdown-menu pull-right">
-            <li><a data-light-brightness="25" class="js-brightness-control" href="#">25% brightness</a></li>
-            <li><a data-light-brightness="50" class="js-brightness-control" href="#">50% brightness</a></li>
-            <li><a data-light-brightness="75" class="js-brightness-control" href="#">75% brightness</a></li>
-            <li><a data-light-brightness="100" class="js-brightness-control" href="#">100% brightness</a></li>
-        </ul>
-    </div>
-{{else}}
-    <button type="button" class="js-power-button btn btn-primary btn-block{{#if on}} active{{/if}}">
-        Turn {{#if on}}off{{else}}on{{/if}}</button>
-{{/if}}
+<button type="button" class="js-power-button btn btn-primary btn-block{{#if on}} active{{/if}}">
+	Turn {{#if on}}off{{else}}on{{/if}}
+</button>
+
