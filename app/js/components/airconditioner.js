@@ -17,17 +17,20 @@ export class AirConditioner extends Component {
 	constructor(container, config) {
 		super(container, config);
 
-		$(this.container).on("click", ".js-power-toggle", (event) => {
+		// Power toggle button event
+		this.container.on("click", ".js-power-toggle", (event) => {
 			this.togglePower();
 			event.preventDefault();
 		});
 
-		$(this.container).on("click", ".js-oscillate-toggle", (event) => {
+		// Oscillate toggle button event
+		this.container.on("click", ".js-oscillate-toggle", (event) => {
 			this.toggleOscillate();
 			event.preventDefault();
 		});
 
-		$(this.container).on("click", ".js-timer-control", (event) => {
+		// Timer menu
+		this.container.on("click", ".js-timer-control", (event) => {
 			const timer = $(event.target).data("aircon-timer");
 			if (timer !== undefined) {
 				this.timer(timer);
@@ -35,10 +38,20 @@ export class AirConditioner extends Component {
 			event.preventDefault();
 		});
 
-		$(this.container).on("click", ".js-mode-control", (event) => {
+		// Mode menu
+		this.container.on("click", ".js-mode-control", (event) => {
 			const mode = $(event.target).data("aircon-mode");
 			if (mode !== undefined) {
 				this.mode(mode);
+			}
+			event.preventDefault();
+		});
+
+		// Temp up/down buttons
+		this.container.on("click", ".js-temp-control", (event) => {
+			const change = $(event.target).closest(".js-temp-control").data("temp-change");
+			if (change !== undefined) {
+				this.temp(this.targetTemp + parseInt(change, 10));
 			}
 			event.preventDefault();
 		});
@@ -83,14 +96,15 @@ export class AirConditioner extends Component {
 	}
 
 	/**
-	 * Update the timer
-	 * @param {Integer} duration new timer duration in seconds
+	 * Updates the timer duration
+	 * @param {Integer} duration the new timer duration in seconds
 	 */
 	timer(duration) {
 		this.data.timer = parseInt(duration, 10);
 
-		// Simulate the timer counting down
+		// Simulate the timer counting down, in a real-life situation this data would probably come from the remote component
 		clearInterval(this._decrementTimer);
+
 		if (duration > 0) {
 			this._decrementTimer = setInterval(() => {
 				if (this.data.on) {
@@ -101,8 +115,25 @@ export class AirConditioner extends Component {
 						clearInterval(this._decrementTimer);
 					}
 				}
-			}, 60000);
+			}, 60000); // run once every minute
 		}
+	}
+
+	/**
+	 * Updates the target temperature.
+	 * @param {Integer} temp the new target temperature
+	 */
+	temp(temp) {
+		console.log(temp);
+		this.data.targetTemp = parseInt(temp, 10);
+	}
+
+	/**
+	 * Gets the target temperature
+	 * @return {Integer}
+	 */
+	get targetTemp() {
+		return this.data.targetTemp;
 	}
 
 	/**
@@ -132,18 +163,18 @@ export class AirConditioner extends Component {
 
 	/**
 	 * Renders the component using it's Handlebars template
-	 * @return {jQuery}
+	 * @return {String} Returns an HTML string containing the rendered component
 	 */
 	render() {
-		return $(tmpl({
+		return tmpl({
 			"description": this.config.description,
 			"on": this.data.on,
-			"targetTemp": this.data.targetTemp,
+			"targetTemp": this.targetTemp,
 			"currentTemp": this.data.currentTemp,
 			"mode": this.data.mode,
 			"timer": this.data.timer,
 			"oscillate": this.data.oscillate
-		}));
+		});
 	}
 
 	/**

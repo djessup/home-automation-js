@@ -13,7 +13,7 @@ export class Curtain extends Component {
     constructor(container, config) {
         super(container, config);
 
-        $(this.container).on("click", ".js-open-toggle", (event) => {
+        this.container.on("click", ".js-open-toggle", (event) => {
             this.toggle();
             event.preventDefault();
         });
@@ -54,7 +54,7 @@ export class Curtain extends Component {
 
     /**
      * Renders the component using it's Handlebars template
-     * @return {jQuery}
+     * @return {String} Returns an HTML string containing the rendered component
      */
     render() {
         return $(tmpl({

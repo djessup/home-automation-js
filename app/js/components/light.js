@@ -4,6 +4,9 @@ import { Component } from "app/js/component";
 import tmpl from "app/tmpl/light.hbs!";
 import "app/css/light.css!";
 
+/**
+ * A light component with dimmer support.
+ */
 export class Light extends Component {
 
     /**
@@ -49,7 +52,7 @@ export class Light extends Component {
 
     /**
      * Renders the component using it's Handlebars template
-     * @return {jQuery}
+     * @return {String} Returns an HTML string containing the rendered component
      */
     render() {
         return tmpl({
@@ -61,22 +64,43 @@ export class Light extends Component {
         });
     }
 
+    /**
+     * Turns the light on and off
+     * @param {Boolean} on the updated power state, true = on, false = off
+     */
     power(on) {
         this.data.on = !!on;
     }
 
+    /**
+     * Sets the light's brightness to the specified percentage (where 0 is the darkest and 100 is full brightness.
+     * @param {Number} amount the new brightness setting. Values outside the range of 0-100 will be capped to the nearest
+     *     allowed value.
+     */
     dimmer(amount) {
         this.data.brightness = Math.min(Math.max(amount, 0), 100);
     }
 
+    /**
+     * Toggles the power setting on/off.
+     */
     toggle() {
         this.power(!this.on);
     }
 
+    /**
+     * Gets the power status
+     * @return {Boolean} the current power status, true = on, false = off
+     */
     get on() {
         return !!this.data.on;
     }
 
+    /**
+     * Gets the current brightness. If the light is off, this will always report zero. If the light is on but not
+     * dimmable it will always report 100.
+     * @return {Number} the current brightness.
+     */
     get brightness() {
 
         if (!this.on) {
@@ -90,8 +114,12 @@ export class Light extends Component {
         return 100;
     }
 
+    /**
+     * Indicates if the light is dimmable or not.
+     * @return {Boolean} Returns true if the light is dimmable, false if it is not (or has not been configured).
+     */
     get dimmable() {
-        return this.config.properties.has("dimmable") ? this.config.properties.get("dimmable") : false;
+        return this.config.properties.has("dimmable") ? !!this.config.properties.get("dimmable") : false;
     }
 
 }

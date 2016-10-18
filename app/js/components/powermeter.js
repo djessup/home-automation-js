@@ -1,7 +1,7 @@
 "use strict";
 
 import { Component } from "app/js/component";
-import tmpl from "app/tmpl/power-meter.hbs!"
+import tmpl from "app/tmpl/power-meter.hbs!";
 
 /**
  * A read-only power meter component with simulated data fluctuations.
@@ -38,11 +38,13 @@ export class PowerMeter extends Component {
 
     /**
      * Renders the component using it's Handlebars template
-     * @return {jQuery}
+     * @return {String} Returns an HTML string containing the rendered component
      */
     render() {
         const percent = this.percent;
 
+        // Set the progress bar colour based on the wattage percent
+        // 0-25 = blue, 26-50 = green, 51-75 = yellow, 76-100 = red
         let progressBarClass;
         if (percent > 75) {
             progressBarClass = "progress-bar-danger";
@@ -54,7 +56,7 @@ export class PowerMeter extends Component {
             progressBarClass = "progress-bar-info";
         }
 
-        return $(tmpl({
+        return tmpl({
             description: this.config.description,
             minWatts: this.minWatts,
             maxWatts: this.maxWatts,
@@ -64,7 +66,7 @@ export class PowerMeter extends Component {
             powerFactor: this.powerFactor,
             percent: this.percent,
             progressBarClass: progressBarClass
-        }));
+        });
     }
 
     /**
@@ -77,11 +79,11 @@ export class PowerMeter extends Component {
 
         if (this._remoteData !== undefined) {
             // Fudge the numbers by +/- 5%
-            const variation              = 1 + (Math.random() * (0.05 + 0.05) - 0.05); // randomly vary by between -5% and 5%
-            this._remoteData.volts       = Math.min(this._remoteData.volts * variation, 250); // cap at 250V
-            this._remoteData.amps        = this._remoteData.amps * variation;
+            const variation = 1 + (Math.random() * (0.05 + 0.05) - 0.05); // randomly vary by between -5% and 5%
+            this._remoteData.volts = Math.min(this._remoteData.volts * variation, 250); // cap at 250V
+            this._remoteData.amps = this._remoteData.amps * variation;
             this._remoteData.powerFactor = Math.min(this._remoteData.powerFactor * variation, 1); // cap at 1
-            this._remoteData.watts       = this._remoteData.volts * this._remoteData.amps;
+            this._remoteData.watts = this._remoteData.volts * this._remoteData.amps;
         }
     }
 

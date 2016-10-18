@@ -13,11 +13,11 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@bitbucket.org/djessup/home-automation-js.git"
+    "url": "git+ssh://git@github.com/djessup/home-automation-js.git"
   },
-  "author": "David Jessup <david.jessup@sydney.edu.au>",
+  "author": "David Jessup <dave.jessup@gmail.com>",
   "license": "ISC",
-  "homepage": "https://bitbucket.org/djessup/home-automation-js#readme",
+  "homepage": "https://github.com/djessup/home-automation-js#readme",
   "devDependencies": {
     "browser-sync": "^2.17.2",
     "es6-module-loader": "^0.17.11",

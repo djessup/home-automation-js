@@ -65,7 +65,7 @@
             System.import('js/app.js').then(function (app) {
 
                 // Start the app
-                var api = app.run($("#has-components"));
+                var api = app.run("#has-components");
 
                 // Register sample components
                 api.register("/data/curtain/config.json");

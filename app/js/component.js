@@ -56,7 +56,7 @@ export class ComponentConfig {
         this._properties = new Map();
 
         // Copy each custom property
-        if (config.properties) {
+        if (config.properties !== undefined) {
             for (const key in config.properties) {
                 if (config.properties.hasOwnProperty(key)) {
                     this._properties.set(key, config.properties[key]);

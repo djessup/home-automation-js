@@ -37,7 +37,14 @@
     </tr>
     <tr>
         <th>Target/current temp</th>
-        <td>{{targetTemp}}C / {{currentTemp}}C</td>
+        <td>
+            {{targetTemp}}C / {{currentTemp}}C
+            <div class="btn-group pull-right" role="group" aria-label="Change temperature">
+                <button data-temp-change="1" type="button" class="js-temp-control btn btn-default btn-xs"><span class="glyphicon glyphicon-triangle-top"></span> Up</button>
+                <button data-temp-change="-1" type="button" class="js-temp-control btn btn-default btn-xs"><span class="glyphicon glyphicon-triangle-bottom"></span> Down</button>
+            </div>
+
+        </td>
     </tr>
     <tr>
         <th>Oscillate</th>
