@@ -2,7 +2,7 @@
   "type": "Light",
   "name": "Patio",
   "description": "20W LED",
-  "status": "/data/light-2/status.json",
+  "status": "data/light-2/status.json",
   "frequency": "10",
   "properties": {
     "dimmable": false

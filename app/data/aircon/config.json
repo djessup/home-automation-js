@@ -2,7 +2,7 @@
   "type": "AirConditioner",
   "name": "Living room",
   "description": "Fujitsu 7.1KW reverse cycle system",
-  "status": "/data/aircon/status.json",
+  "status": "data/aircon/status.json",
   "frequency": "10",
   "properties": {
     

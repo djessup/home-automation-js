@@ -38,7 +38,7 @@
                                                     <div class="input-group-addon"><span
                                                             class="glyphicon glyphicon-globe"></span></div>
                                                     <input type="text" class="form-control js-component-config-url"
-                                                           id="component-config-url" placeholder="/data/light-2/config.json">
+                                                           id="component-config-url" placeholder="data/light-2/config.json">
                                                 </div>
                                             </div>
                                             <div class="col-sm-3">
@@ -68,10 +68,10 @@
                 var api = app.run("#has-components");
 
                 // Register sample components
-                api.register("/data/curtain/config.json");
-                api.register("/data/light-1/config.json");
-                api.register("/data/power-meter/config.json");
-                api.register("/data/aircon/config.json");
+                api.register("data/curtain/config.json");
+                api.register("data/light-1/config.json");
+                api.register("data/power-meter/config.json");
+                api.register("data/aircon/config.json");
 
                 // Allow on-demand registration using the "add component" form
                 $('.js-add-component-form').submit(function (event) {
