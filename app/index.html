@@ -1,75 +1,84 @@
 <!doctype html>
 <html>
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Home Automation Simulator</title>
-</head>
-<body class="has-app">
-<nav class="navbar navbar-inverse navbar-fixed-top">
-    <div class="container-fluid">
-        <div class="navbar-header">
-            <a class="navbar-brand" href="#">Home Automation Simulator</a>
-        </div>
-    </div>
-</nav>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Home Automation Simulator</title>
+    </head>
 
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-xs-12 main">
-
-            <h1 class="page-header">Dashboard</h1>
-
-            <div id="has-components" class="row bricklayer"></div>
-
-            <div class="row">
-                <div class="col-sm-12 b-add-component">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <h4 class="panel-title">Add more components</h4>
-                        </div>
-                        <div class="panel-body">
-                            <p>Connect the component to your network and enter the configuration URL:</p>
-                            <form class="js-add-component-form">
-                                <div class="form-group">
-                                    <label for="component-config-url" class="sr-only">Configuration URL</label>
-                                    <div class="col-sm-9">
-                                        <div class="input-group">
-                                            <div class="input-group-addon"><span class="glyphicon glyphicon-globe"></span></div>
-                                            <input type="text" class="form-control js-component-config-url" id="component-config-url" placeholder="/data/light-1/config.json">
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-3">
-                                        <button type="submit" class="btn btn-primary btn-block">Register</button>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
+    <body class="has-app">
+        <nav class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="/">Home Automation Simulator</a>
                 </div>
             </div>
+        </nav>
 
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-xs-12 main">
+
+                    <h1 class="page-header">Dashboard</h1>
+
+                    <div class="row">
+                        <div class="col-sm-12 b-add-component">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">Add more components</h4>
+                                </div>
+                                <div class="panel-body">
+                                    <p>Connect the component to your network and enter the configuration URL:</p>
+                                    <form class="js-add-component-form">
+                                        <div class="form-group">
+                                            <label for="component-config-url" class="sr-only">Configuration URL</label>
+                                            <div class="col-sm-9">
+                                                <div class="input-group">
+                                                    <div class="input-group-addon"><span
+                                                            class="glyphicon glyphicon-globe"></span></div>
+                                                    <input type="text" class="form-control js-component-config-url"
+                                                           id="component-config-url" placeholder="/data/light-2/config.json">
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <button type="submit" class="btn btn-primary btn-block">Register</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="has-components" class="row bricklayer">
+                        <!-- Components will be loaded into this container -->
+                    </div>
+
+                </div>
+            </div>
         </div>
-    </div>
-</div>
 
-<script src="jspm_packages/system.js"></script>
-<script src="config.js"></script>
-<script>System.import('js/app.js').then(function (app) {
-    var container = $("#has-components");
-    var api = app.run(container);
+        <script src="jspm_packages/system.js"></script>
+        <script src="config.js"></script>
+        <script>
+            System.import('js/app.js').then(function (app) {
 
-    // Register sample components
-    api.register("/data/aircon/config.json");
-    api.register("/data/light-1/config.json");
-    api.register("/data/light-2/config.json");
-    api.register("/data/power-meter/config.json");
+                // Start the app
+                var api = app.run($("#has-components"));
 
-    $('.js-add-component-form').submit(function(event) {
-        api.register($(event.target).find('.js-component-config-url').val());
-        event.preventDefault();
-    });
-});</script>
-</body>
+                // Register sample components
+                api.register("/data/curtain/config.json");
+                api.register("/data/light-1/config.json");
+                api.register("/data/power-meter/config.json");
+                api.register("/data/aircon/config.json");
+
+                // Allow on-demand registration using the "add component" form
+                $('.js-add-component-form').submit(function (event) {
+                    api.register($(event.target).find('.js-component-config-url').val());
+                    event.preventDefault();
+                });
+            });
+        </script>
+    </body>
 </html>

@@ -2,7 +2,17 @@
 
 import $ from "jquery";
 
-class ComponentConfig {
+/**
+ * A Component configuration. Stores values retrieved from the component's configuration endpoint for later use.
+ */
+export class ComponentConfig {
+
+    /**
+     * Creates a new component configuration instance.
+     * @param {String} id the component's ID
+     * @param {String} url the component's configuration URL
+     * @param {Object} config the component's configuration data
+     */
     constructor(id, url, config) {
 
         // Check the URL was provided
@@ -41,10 +51,11 @@ class ComponentConfig {
         this._name = config.name;
         this._description = (config.description) ? config.description : ""; // default to "" if not specified
         this._status = config.status;
-        this._frequency = (config.frequency) ? parseInt(config.frequency, 10) : "10";
+        this._frequency = (config.frequency) ? parseInt(config.frequency, 10) : "10"; // default to 10 seconds if not
+                                                                                      // specified
         this._properties = new Map();
 
-        // Copy each property
+        // Copy each custom property
         if (config.properties) {
             for (const key in config.properties) {
                 if (config.properties.hasOwnProperty(key)) {
@@ -120,8 +131,16 @@ class ComponentConfig {
     }
 }
 
-class Component {
+/**
+ * Abstract base class for component implementations.
+ */
+export class Component {
 
+    /**
+     * Creates a new component instance.
+     * @param {jQuery|HTMLElement} container the container element the component will be rendered to
+     * @param {ComponentConfig} config the component's configuration
+     */
     constructor(container, config) {
         if (new.target === Component) {
             throw new TypeError("Component cannot be used directly, you must create a concrete implementation.");
@@ -157,6 +176,12 @@ class Component {
         this.enablePost();
     }
 
+    /**
+     * Schedules updated component data to be sent to the remote endpoint. Will automatically throttle multiple
+     * requests made within a short interval to avoid thrashing remote services when multiple properties are updated in
+     * quick succession.
+     * @private
+     */
     _postStatus() {
         // Debounce the post in case multiple properties are updated in quick succession.
         if (this._postTimer !== undefined) {
@@ -172,7 +197,7 @@ class Component {
      * POSTs status updates back to the component's status endpoint. Since this is a simulaton the values are retained
      * in memory, in a real-life situation this function would do something like:
      * <code>$.post(this.config.status, this.data)</code>
-     * @returns {Promise}
+     * @returns {Promise} Returns a promise that is resolved once the updated data has been posted.
      * @private
      */
     _doPost() {
@@ -194,25 +219,45 @@ class Component {
         });
     }
 
+    /**
+     * Schedules updated data to be read from the remote component, according to the component's update frequency
+     * configuration value.
+     * @private
+     */
     _scheduleUpdate() {
-        this.stopUpdates();
+        this.stopUpdates(); // stop any existing updates
         this._updateEnabled = true;
         this._timer = setTimeout(this.update.bind(this), this.config.frequency * 1000);
     }
 
+    /**
+     * Renders the component to it's container.
+     * @private
+     */
     _render() {
         this.container.html(this.render());
         this.afterRender();
     }
 
+    /**
+     * Turns off automatic data posting when local data is updated.
+     */
     disablePost() {
         this._postEnabled = false;
     }
 
+    /**
+     * Turns on automatic data posting when local data is updated.
+     */
     enablePost() {
         this._postEnabled = true;
     }
 
+    /**
+     * Triggers an update of remote data, and will continue to update indefinitely (unless told not to).
+     * @param {Boolean} onlyOnce if true then only a single update will be performed
+     * @return {Promise} Returns a promise that will be resolved once the updated data has been received.
+     */
     update(onlyOnce = false) {
         return this.status.then((data) => { // resolve handler
             console.info(`Got remote data for ${this.config.type} (${this.config.name}):`, data);
@@ -239,6 +284,11 @@ class Component {
         }
     }
 
+    /**
+     * After remote data has been received, this function will be called and provided the new data for processing.
+     * Component implementations are expected to override this function and implement their own update handlers.
+     * @param {Object} data the remote data object
+     */
     handleUpdate(data) {
         throw new TypeError("The handleUpdate(data) method must be overridden by the implementation.");
     }
@@ -249,12 +299,13 @@ class Component {
      * @returns {jQuery|HTMLElement|String} the component's view content
      */
     render() {
-        return $("<p>This component has not implemented a render function.</p>");
+        throw new TypeError("The render() method must be overridden by the implementation.");
     }
 
     /**
      * Hook function that will be called after the component view has been rendered. Can be used by implementations
-     * which need to run actions after the component view has been inserted into the DOM.
+     * which need to run actions after the component view has been inserted into the DOM. It is optional to implement
+     * this method.
      */
     afterRender() {
     }
@@ -307,6 +358,3 @@ class Component {
         return $(this._container);
     }
 }
-
-
-export { ComponentConfig, Component }

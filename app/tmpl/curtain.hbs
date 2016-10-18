@@ -1,0 +1,24 @@
+<table class="table">
+    <tr>
+        <th>Location</th>
+        <td>{{description}}</td>
+    </tr>
+    <tr>
+        <th>Status</th>
+        <td>
+            {{#if isOpen}}
+                Open
+            {{else}}
+                Closed
+            {{/if}}
+            <button class="pull-right js-open-toggle btn btn-xs btn-primary">
+                {{#if isOpen}}
+                    Close
+                {{else}}
+                    Open
+                {{/if}}
+            </button>
+        </td>
+    </tr>
+
+</table>

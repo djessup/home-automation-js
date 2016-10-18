@@ -1,10 +1,19 @@
 "use strict";
 
 import { Component } from "app/js/component";
-import tmpl from "app/templates/air-conditioner.hbs!"
+import tmpl from "app/tmpl/air-conditioner.hbs!"
 
+/**
+ * An air-conditioner component allowing monitoring and remote control of power, mode, target temperature, timer, and
+ * fan oscillation.
+ */
 export class AirConditioner extends Component {
 
+	/**
+	 * Creates a new component instance.
+	 * @param {jQuery|HTMLElement} container the container element the component will be rendered to
+	 * @param {ComponentConfig} config the component's configuration
+	 */
 	constructor(container, config) {
 		super(container, config);
 
@@ -12,10 +21,12 @@ export class AirConditioner extends Component {
 			this.togglePower();
 			event.preventDefault();
 		});
+
 		$(this.container).on("click", ".js-oscillate-toggle", (event) => {
 			this.toggleOscillate();
 			event.preventDefault();
 		});
+
 		$(this.container).on("click", ".js-timer-control", (event) => {
 			const timer = $(event.target).data("aircon-timer");
 			if (timer !== undefined) {
@@ -23,6 +34,7 @@ export class AirConditioner extends Component {
 			}
 			event.preventDefault();
 		});
+
 		$(this.container).on("click", ".js-mode-control", (event) => {
 			const mode = $(event.target).data("aircon-mode");
 			if (mode !== undefined) {
@@ -32,26 +44,48 @@ export class AirConditioner extends Component {
 		});
 	}
 
+	/**
+	 * Set the air-conditioner mode
+	 * @param mode string specifying the new mode (i.e. Auto/Cool/Heat/Dry/Fan)
+	 */
 	mode(mode) {
 		this.data.mode = mode;
 	}
 
+	/**
+	 * Turns the power on/off
+	 * @param on the new power state, true = on, false = off
+	 */
 	power(on) {
 		this.data.on = !!on;
 	}
 
+	/**
+	 * Toggles the power state on and off
+	 */
 	togglePower() {
 		this.power(!this.data.on);
 	}
 
+	/**
+	 * Turns fan oscillation on/off
+	 * @param on the new oscillation state, true = on, false = off
+	 */
 	oscillate(on) {
 		this.data.oscillate = !!on;
 	}
 
+	/**
+	 * Toggles fan oscillation on and off
+	 */
 	toggleOscillate() {
 		this.oscillate(!this.data.oscillate);
 	}
 
+	/**
+	 * Update the timer
+	 * @param {Integer} duration new timer duration in seconds
+	 */
 	timer(duration) {
 		this.data.timer = parseInt(duration, 10);
 
@@ -71,6 +105,10 @@ export class AirConditioner extends Component {
 		}
 	}
 
+	/**
+	 * Parse and store new remote data.
+	 * @param {Object} data the remote data object
+	 */
 	handleUpdate(data) {
 		if (data.on !== undefined) {
 			this.data.on = data.on;
@@ -92,6 +130,10 @@ export class AirConditioner extends Component {
 		}
 	}
 
+	/**
+	 * Renders the component using it's Handlebars template
+	 * @return {jQuery}
+	 */
 	render() {
 		return $(tmpl({
 			"description": this.config.description,

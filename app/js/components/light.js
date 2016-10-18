@@ -1,15 +1,15 @@
 "use strict";
 
 import { Component } from "app/js/component";
-import bootstrap from "bootstrap/js/bootstrap.js";
-import tmpl from "app/templates/light.hbs!";
+import tmpl from "app/tmpl/light.hbs!";
 import "app/css/light.css!";
 
 export class Light extends Component {
 
     /**
-     *
-     * @param {ComponentConfig} config
+     * Creates a new component instance.
+     * @param {jQuery|HTMLElement} container the container element the component will be rendered to
+     * @param {ComponentConfig} config the component's configuration
      */
     constructor(container, config) {
         super(container, config);
@@ -29,6 +29,10 @@ export class Light extends Component {
         });
     }
 
+    /**
+     * Parse and store new remote data.
+     * @param {Object} data the remote data object
+     */
     handleUpdate(data) {
         if (data.on !== undefined) {
             this.power(data.on);
@@ -43,15 +47,18 @@ export class Light extends Component {
         }
     }
 
-
+    /**
+     * Renders the component using it's Handlebars template
+     * @return {jQuery}
+     */
     render() {
-        return $(tmpl({
+        return tmpl({
             name: this.config.name,
             description: this.config.description,
             dimmable: this.dimmable,
             brightness: this.brightness,
             on: this.on
-        }));
+        });
     }
 
     power(on) {

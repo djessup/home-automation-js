@@ -1,0 +1,8 @@
+{
+  "type": "Curtain",
+  "name": "Bedroom",
+  "description": "Bedroom window",
+  "status": "/data/curtain/status.json",
+  "frequency": "10",
+  "properties": {}
+}

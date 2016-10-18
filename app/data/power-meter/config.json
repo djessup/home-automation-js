@@ -1,11 +1,11 @@
 {
   "type": "PowerMeter",
   "name": "Fridge",
-  "description": "Connected to 200W fridge",
+  "description": "Connected to 300W fridge",
   "status": "/data/power-meter/status.json",
   "frequency": "2",
   "properties": {
     "minWatts": 0,
-    "maxWatts": 300
+    "maxWatts": 350
   }
 }
