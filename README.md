@@ -373,11 +373,9 @@ There is also a lot of scope for UI/UX improvements in the interface, the curren
 
 ## Todo
 
-* Wifi kettle https://www.theguardian.com/technology/2016/oct/12/english-man-spends-11-hours-trying-to-make-cup-of-tea-with-wi-fi-kettle
-* Grid behaviour improvements
-* localstorage for emulating persistence
-* Loading indicator
-* Authentication and security
+* Improve the fluid grid behaviour
+* Use Local Storage for emulating persistence between browser refreshes
+* Add a [WiFi kettle](https://www.theguardian.com/technology/2016/oct/12/english-man-spends-11-hours-trying-to-make-cup-of-tea-with-wi-fi-kettle) component
 
 ## Acknowledgments
 
